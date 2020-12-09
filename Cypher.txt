@@ -1,0 +1,23 @@
+CREATE (java:Conocimiento {nombre:"Java", uid:"11790000-CF25-B808-2365-08D36732603A"}),
+(swing:Conocimiento {nombre:"Swing", uid:"11790000-CF25-B808-2365-08D36732603B"}),
+(spring:Conocimiento {nombre:"Spring", uid:"11790000-CF25-B808-2365-08D36732603C"}),
+(jwt:Conocimiento {nombre:"JWT", uid:"11790000-CF25-B808-2365-08D36732603D"}),
+(juan:Persona {nombre:"Juan",dni:"00000001",email:"juan@hotmail.com", uid:"11790000-CF25-B808-2365-08D36732603E"}),
+(alberto:Persona {nombre:"Alberto",dni:"00000002",email:"alberto@hotmail.com", uid:"11790000-CF25-B808-2365-08D36732603F"}),
+(carlos:Persona {nombre:"Carlos",dni:"00000003",email:"carlos@hotmail.com", uid:"11790000-CF25-B808-2365-08D367326040"}),
+(jwt)-[:CONTIENE]->(spring),
+(spring)-[:CONTIENE]->(java),
+(swing)-[:CONTIENE]->(java),
+(juan)-[:CONOCE]->(java),
+(alberto)-[:CONOCE]->(jwt)
+
+// Buscar todas las personas que conocen algo
+MATCH (p:Persona)-[:CONOCE]->(c:Conocimiento {nombre:"Java"})
+RETURN p
+
+// Buscar todas las personas que conocen algo (x transitividad)
+MATCH (p:Persona)-[:CONOCE|CONTIENE*1..]->(c:Conocimiento {nombre:"Java"})
+RETURN p
+
+// Buscar todas las personas que PROBABLEMENTE puedan llegar a tener ese conocimiento
+Dsp
